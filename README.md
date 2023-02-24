@@ -1,2 +1,2 @@
 # social-media-api
-Tech stack for this project: Go, GraphQL, TDD
+Tech stack for this project: Go, GraphQL. Project will include TDD
