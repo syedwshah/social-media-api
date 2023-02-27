@@ -16,7 +16,7 @@ var emailRegexp = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0
 
 
 type AuthService interface {
-	Register(ctx context.Context, input RegisterInput) (AuthResponse ,error)
+	Register(ctx context.Context, input RegisterInput) (AuthResponse, error)
 }
 
 type AuthResponse struct {
