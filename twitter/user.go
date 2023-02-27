@@ -8,7 +8,7 @@ import (
 
 var (
 	ErrUsernameTaken = errors.New("username taken")
-	ErrEmailTaken = errors.New("email taken")
+	ErrEmailTaken    = errors.New("email taken")
 )
 
 type UserRepo interface {
@@ -18,10 +18,10 @@ type UserRepo interface {
 }
 
 type User struct {
-	ID string
-	Username string
-	Email string
-	Password string
+	ID        string
+	Username  string
+	Email     string
+	Password  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
