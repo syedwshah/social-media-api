@@ -37,7 +37,7 @@ func (as *AuthService) Register(ctx context.Context, input twitter.RegisterInput
 	}
 
 	user := twitter.User{
-		Email: input.Email,
+		Email:    input.Email,
 		Username: input.Username,
 	}
 
@@ -58,6 +58,6 @@ func (as *AuthService) Register(ctx context.Context, input twitter.RegisterInput
 	//return the access token and user
 	return twitter.AuthResponse{
 		AccessToken: "a token, will be JWT later",
-		User: user,
+		User:        user,
 	}, nil
 }
