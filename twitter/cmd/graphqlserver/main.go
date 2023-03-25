@@ -1,7 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"log"
 
-func main()  {
-	fmt.Println("Hello world")
+	"github.com/syedwshah/twitter/config"
+	"github.com/syedwshah/twitter/postgres"
+)
+
+func main() {
+	ctx := context.Background()
+
+	conf := config.New()
+
+	db := postgres.New(ctx, conf)
+
+	if err := db.Migrate(); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("WORKING")
 }
