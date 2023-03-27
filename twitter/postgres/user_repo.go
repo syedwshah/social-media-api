@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/georgysavva/scany/v2/pgxscan"
-	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/v4"
 	"github.com/syedwshah/twitter"
 )
 
