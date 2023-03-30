@@ -9,13 +9,14 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/syedwshah/twitter"
+	"github.com/syedwshah/twitter/faker"
 	"github.com/syedwshah/twitter/test_helpers"
 )
 
 func TestIntegrationAuthServices_Register(t *testing.T) {
 	validInput := twitter.RegisterInput{
-		Username:        "bob",
-		Email:           "bob@example.com",
+		Username:        faker.Username(),
+		Email:           faker.Email(),
 		Password:        "password",
 		ConfirmPassword: "password",
 	}
@@ -44,7 +45,7 @@ func TestIntegrationAuthServices_Register(t *testing.T) {
 
 		_, err = authService.Register(ctx, twitter.RegisterInput{
 			Username:        validInput.Username,
-			Email:           "bob2@example.com",
+			Email:           faker.Email(),
 			Password:        "password",
 			ConfirmPassword: "password",
 		})
@@ -61,7 +62,7 @@ func TestIntegrationAuthServices_Register(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = authService.Register(ctx, twitter.RegisterInput{
-			Username:        "bob2",
+			Username:        faker.Username(),
 			Email:           validInput.Email,
 			Password:        "password",
 			ConfirmPassword: "password",
