@@ -1,3 +1,9 @@
 {
-  "editor.defaultFormatter": "golang.go"
+  "editor.defaultFormatter": "golang.go",
+  "go.formatTool": "goimports",
+
+  "gopls": {
+      "build.buildFlags": ["-tags=integration"]
+    },
+  "go.testFlags": ["-tags", "integration"]
 }
