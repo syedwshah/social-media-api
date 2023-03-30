@@ -28,12 +28,12 @@ func (as *AuthService) Register(ctx context.Context, input twitter.RegisterInput
 		return twitter.AuthResponse{}, err
 	}
 
-	//Check if username taken
+	// check if username is already taken
 	if _, err := as.UserRepo.GetByUsername(ctx, input.Username); !errors.Is(err, twitter.ErrNotFound) {
 		return twitter.AuthResponse{}, twitter.ErrUsernameTaken
 	}
 
-	//check if email taken
+	// check if email is already taken
 	if _, err := as.UserRepo.GetByEmail(ctx, input.Email); !errors.Is(err, twitter.ErrNotFound) {
 		return twitter.AuthResponse{}, twitter.ErrEmailTaken
 	}
@@ -43,7 +43,7 @@ func (as *AuthService) Register(ctx context.Context, input twitter.RegisterInput
 		Username: input.Username,
 	}
 
-	//hash the password
+	// hash the password
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), passwordCost)
 	if err != nil {
 		return twitter.AuthResponse{}, fmt.Errorf("error hashing password: %v", err)
@@ -51,15 +51,15 @@ func (as *AuthService) Register(ctx context.Context, input twitter.RegisterInput
 
 	user.Password = string(hashPassword)
 
-	//create the user
+	// create the user
 	user, err = as.UserRepo.Create(ctx, user)
 	if err != nil {
-		return twitter.AuthResponse{}, fmt.Errorf("error creating a user: %v", err)
+		return twitter.AuthResponse{}, fmt.Errorf("error creating user: %v", err)
 	}
 
-	//return the access token and user
+	// return accessToken and user
 	return twitter.AuthResponse{
-		AccessToken: "a token, will be JWT later",
+		AccessToken: "a token here",
 		User:        user,
 	}, nil
 }

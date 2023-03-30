@@ -13,7 +13,6 @@ import (
 )
 
 func TestAuthService_Register(t *testing.T) {
-
 	validInput := twitter.RegisterInput{
 		Username:        "bob",
 		Email:           "bob@example.com",
@@ -26,16 +25,18 @@ func TestAuthService_Register(t *testing.T) {
 
 		userRepo := &mocks.UserRepo{}
 
-		userRepo.On("GetByUsername", mock.Anything, mock.Anything).Return(twitter.User{}, twitter.ErrNotFound)
+		userRepo.On("GetByUsername", mock.Anything, mock.Anything).
+			Return(twitter.User{}, twitter.ErrNotFound)
 
-		userRepo.On("GetByEmail", mock.Anything, mock.Anything).Return(twitter.User{}, twitter.ErrNotFound)
+		userRepo.On("GetByEmail", mock.Anything, mock.Anything).
+			Return(twitter.User{}, twitter.ErrNotFound)
 
-		userRepo.On("Create", mock.Anything, mock.Anything).Return(twitter.User{
-			ID:       "123",
-			Username: validInput.Username,
-			Email:    validInput.Email,
-			Password: validInput.Password,
-		}, nil)
+		userRepo.On("Create", mock.Anything, mock.Anything).
+			Return(twitter.User{
+				ID:       "123",
+				Username: validInput.Username,
+				Email:    validInput.Email,
+			}, nil)
 
 		service := NewAuthService(userRepo)
 
@@ -46,7 +47,6 @@ func TestAuthService_Register(t *testing.T) {
 		require.NotEmpty(t, res.User.ID)
 		require.NotEmpty(t, res.User.Email)
 		require.NotEmpty(t, res.User.Username)
-		require.NotEmpty(t, res.User.Password)
 
 		userRepo.AssertExpectations(t)
 	})
@@ -56,7 +56,8 @@ func TestAuthService_Register(t *testing.T) {
 
 		userRepo := &mocks.UserRepo{}
 
-		userRepo.On("GetByUsername", mock.Anything, mock.Anything).Return(twitter.User{}, nil)
+		userRepo.On("GetByUsername", mock.Anything, mock.Anything).
+			Return(twitter.User{}, nil)
 
 		service := NewAuthService(userRepo)
 
@@ -73,8 +74,11 @@ func TestAuthService_Register(t *testing.T) {
 
 		userRepo := &mocks.UserRepo{}
 
-		userRepo.On("GetByUsername", mock.Anything, mock.Anything).Return(twitter.User{}, twitter.ErrNotFound)
-		userRepo.On("GetByEmail", mock.Anything, mock.Anything).Return(twitter.User{}, nil)
+		userRepo.On("GetByUsername", mock.Anything, mock.Anything).
+			Return(twitter.User{}, twitter.ErrNotFound)
+
+		userRepo.On("GetByEmail", mock.Anything, mock.Anything).
+			Return(twitter.User{}, nil)
 
 		service := NewAuthService(userRepo)
 
@@ -91,11 +95,14 @@ func TestAuthService_Register(t *testing.T) {
 
 		userRepo := &mocks.UserRepo{}
 
-		userRepo.On("GetByUsername", mock.Anything, mock.Anything).Return(twitter.User{}, twitter.ErrNotFound)
+		userRepo.On("GetByUsername", mock.Anything, mock.Anything).
+			Return(twitter.User{}, twitter.ErrNotFound)
 
-		userRepo.On("GetByEmail", mock.Anything, mock.Anything).Return(twitter.User{}, twitter.ErrNotFound)
+		userRepo.On("GetByEmail", mock.Anything, mock.Anything).
+			Return(twitter.User{}, twitter.ErrNotFound)
 
-		userRepo.On("Create", mock.Anything, mock.Anything).Return(twitter.User{}, errors.New("any error can go here"))
+		userRepo.On("Create", mock.Anything, mock.Anything).
+			Return(twitter.User{}, errors.New("something"))
 
 		service := NewAuthService(userRepo)
 
@@ -121,7 +128,6 @@ func TestAuthService_Register(t *testing.T) {
 
 		userRepo.AssertExpectations(t)
 	})
-
 }
 
 func TestAuthService_Login(t *testing.T) {

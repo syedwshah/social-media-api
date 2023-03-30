@@ -35,8 +35,8 @@ func TestRegisterInput_Validate(t *testing.T) {
 		{
 			name: "valid",
 			input: RegisterInput{
-				Username:        "Bob",
-				Email:           "bob@gamil.com",
+				Username:        "bob",
+				Email:           "bob@gmail.com",
 				Password:        "password",
 				ConfirmPassword: "password",
 			},
@@ -45,7 +45,7 @@ func TestRegisterInput_Validate(t *testing.T) {
 		{
 			name: "invalid email",
 			input: RegisterInput{
-				Username:        "Bob",
+				Username:        "bob",
 				Email:           "bob",
 				Password:        "password",
 				ConfirmPassword: "password",
@@ -53,30 +53,30 @@ func TestRegisterInput_Validate(t *testing.T) {
 			err: ErrValidation,
 		},
 		{
-			name: "username too short",
+			name: "too short username",
 			input: RegisterInput{
-				Username:        "B",
-				Email:           "bob@gamil.com",
+				Username:        "b",
+				Email:           "bob@gmail.com",
 				Password:        "password",
 				ConfirmPassword: "password",
 			},
 			err: ErrValidation,
 		},
 		{
-			name: "password too short",
+			name: "too short password",
 			input: RegisterInput{
-				Username:        "Bob",
-				Email:           "bob@gamil.com",
+				Username:        "bob",
+				Email:           "bob@gmail.com",
 				Password:        "pass",
 				ConfirmPassword: "pass",
 			},
 			err: ErrValidation,
 		},
 		{
-			name: "password does not match confirm password",
+			name: "confirm password doesn't match password",
 			input: RegisterInput{
-				Username:        "Bob",
-				Email:           "bob@gamil.com",
+				Username:        "bob",
+				Email:           "bob@gmail.com",
 				Password:        "password",
 				ConfirmPassword: "wrongpassword",
 			},
@@ -89,10 +89,8 @@ func TestRegisterInput_Validate(t *testing.T) {
 			err := tc.input.Validate()
 
 			if tc.err != nil {
-				//error
 				require.ErrorIs(t, err, tc.err)
 			} else {
-				//no error
 				require.NoError(t, err)
 			}
 		})

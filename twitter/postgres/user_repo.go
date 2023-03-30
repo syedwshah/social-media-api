@@ -5,12 +5,18 @@ import (
 	"fmt"
 
 	"github.com/georgysavva/scany/v2/pgxscan"
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v5"
 	"github.com/syedwshah/twitter"
 )
 
 type UserRepo struct {
 	DB *DB
+}
+
+func NewUserRepo(db *DB) *UserRepo {
+	return &UserRepo{
+		DB: db,
+	}
 }
 
 func (ur *UserRepo) Create(ctx context.Context, user twitter.User) (twitter.User, error) {
@@ -33,11 +39,11 @@ func (ur *UserRepo) Create(ctx context.Context, user twitter.User) (twitter.User
 }
 
 func createUser(ctx context.Context, tx pgx.Tx, user twitter.User) (twitter.User, error) {
-	query := "INSERT INTO users (email, username, password) VALUES ($1, $2, $3) RETURNING *;"
+	query := `INSERT INTO users (email, username, password) VALUES ($1, $2, $3) RETURNING *;`
 
 	u := twitter.User{}
 
-	if err := pgx.Get(ctx, tx, &u, query, u.Email, u.Username, u.Password); err != nil {
+	if err := pgxscan.Get(ctx, tx, &u, query, user.Email, user.Username, user.Password); err != nil {
 		return twitter.User{}, fmt.Errorf("error insert: %v", err)
 	}
 

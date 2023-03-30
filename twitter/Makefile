@@ -2,9 +2,8 @@ mock:
 	mockery --all --keeptree
 
 migrate:
-	@migrate -source file://postgres/migrations \
-		-database postgres://postgres:postgres@127.0.0.1:5432/twitter_clone_development?sslmode=disable up 2>&1 | tee migrate.log
-
+	migrate -source file://postgres/migrations \
+			-database postgres://postgres:postgres@127.0.0.1:5432/twitter_clone_development?sslmode=disable up
 
 
 rollback:
