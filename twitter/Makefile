@@ -20,3 +20,6 @@ migration:
 
 run:
 	go run cmd/graphqlserver/main.go
+
+generate:
+	go generate ./..
