@@ -13,6 +13,7 @@ import (
 	"github.com/syedwshah/twitter/config"
 	"github.com/syedwshah/twitter/domain"
 	"github.com/syedwshah/twitter/graph"
+	"github.com/syedwshah/twitter/jwt"
 	"github.com/syedwshah/twitter/postgres"
 )
 
@@ -41,8 +42,10 @@ func main() {
 	userRepo := postgres.NewUserRepo(db)
 
 	// SERVICES
-	authService := domain.NewAuthService(userRepo)
+	authTokenService := jwt.NewTokenService(conf)
+	authService := domain.NewAuthService(userRepo, authTokenService)
 
+	router.Use(authMiddleware(authTokenService))
 	router.Handle("/", playground.Handler("Twitter clone", "/query"))
 	router.Handle("/query", handler.NewDefaultServer(
 		graph.NewExecutableSchema(

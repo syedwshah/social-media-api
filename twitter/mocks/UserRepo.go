@@ -38,23 +38,23 @@ func (_m *UserRepo) Create(ctx context.Context, user twitter.User) (twitter.User
 	return r0, r1
 }
 
-// GetByEmail provides a mock function with given fields: ctx, username
-func (_m *UserRepo) GetByEmail(ctx context.Context, username string) (twitter.User, error) {
-	ret := _m.Called(ctx, username)
+// GetByEmail provides a mock function with given fields: ctx, email
+func (_m *UserRepo) GetByEmail(ctx context.Context, email string) (twitter.User, error) {
+	ret := _m.Called(ctx, email)
 
 	var r0 twitter.User
 	var r1 error
 	if rf, ok := ret.Get(0).(func(context.Context, string) (twitter.User, error)); ok {
-		return rf(ctx, username)
+		return rf(ctx, email)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string) twitter.User); ok {
-		r0 = rf(ctx, username)
+		r0 = rf(ctx, email)
 	} else {
 		r0 = ret.Get(0).(twitter.User)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
-		r1 = rf(ctx, username)
+		r1 = rf(ctx, email)
 	} else {
 		r1 = ret.Error(1)
 	}

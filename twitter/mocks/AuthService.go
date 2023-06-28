@@ -14,6 +14,30 @@ type AuthService struct {
 	mock.Mock
 }
 
+// Login provides a mock function with given fields: ctx, input
+func (_m *AuthService) Login(ctx context.Context, input twitter.LoginInput) (twitter.AuthResponse, error) {
+	ret := _m.Called(ctx, input)
+
+	var r0 twitter.AuthResponse
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, twitter.LoginInput) (twitter.AuthResponse, error)); ok {
+		return rf(ctx, input)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, twitter.LoginInput) twitter.AuthResponse); ok {
+		r0 = rf(ctx, input)
+	} else {
+		r0 = ret.Get(0).(twitter.AuthResponse)
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, twitter.LoginInput) error); ok {
+		r1 = rf(ctx, input)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // Register provides a mock function with given fields: ctx, input
 func (_m *AuthService) Register(ctx context.Context, input twitter.RegisterInput) (twitter.AuthResponse, error) {
 	ret := _m.Called(ctx, input)

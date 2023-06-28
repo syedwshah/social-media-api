@@ -1,25 +1,32 @@
+include .env
+
 mock:
 	mockery --all --keeptree
 
 migrate:
 	migrate -source file://postgres/migrations \
-			-database postgres://postgres:postgres@127.0.0.1:5432/twitter_clone_development?sslmode=disable up
-
+			-database $(DATABASE_URL) up
 
 rollback:
 	migrate -source file://postgres/migrations \
-			-database postgres://postgres:postgres@127.0.0.1:5432/twitter_clone_development?sslmode=disable down
+			-database $(DATABASE_URL) down
 
 drop:
 	migrate -source file://postgres/migrations \
-			-database postgres://postgres:postgres@127.0.0.1:5432/twitter_clone_development?sslmode=disable drop
+			-database $(DATABASE_URL) drop
 
 migration:
 	@read -p "Enter migration name: " name; \
 		migrate create -ext sql -dir postgres/migrations $$name
 
 run:
-	go run cmd/graphqlserver/main.go
+	go run cmd/graphqlserver/*.go
 
 generate:
 	go generate ./..
+
+test:
+	go test ./... --tags="integration"
+
+test-remove-cache:
+	go test ./... --tags="integration" -count=1

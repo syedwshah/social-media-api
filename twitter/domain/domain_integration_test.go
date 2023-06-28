@@ -11,15 +11,17 @@ import (
 
 	"github.com/syedwshah/twitter"
 	"github.com/syedwshah/twitter/config"
+	"github.com/syedwshah/twitter/jwt"
 	"github.com/syedwshah/twitter/postgres"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var (
-	conf        *config.Config
-	db          *postgres.DB
-	userRepo    twitter.UserRepo
-	authService twitter.AuthService
+	conf             *config.Config
+	db               *postgres.DB
+	userRepo         twitter.UserRepo
+	authTokenService twitter.AuthTokenService
+	authService      twitter.AuthService
 )
 
 func TestMain(m *testing.M) {
@@ -44,7 +46,8 @@ func TestMain(m *testing.M) {
 
 	userRepo = postgres.NewUserRepo(db)
 
-	authService = NewAuthService(userRepo)
+	authTokenService = jwt.NewTokenService(conf)
+	authService = NewAuthService(userRepo, authTokenService)
 
 	os.Exit(m.Run())
 }

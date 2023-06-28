@@ -12,9 +12,14 @@ type database struct {
 	URL string
 }
 
-// Config will use a public "Database" of a private "database" struct
+type jwt struct {
+	Secret string
+	Issuer string //service issuer
+}
+
 type Config struct {
-	Database database
+	Database database // public "Database" of a private "database" struct
+	JWT      jwt
 }
 
 func LoadEnv(fileName string) {
@@ -32,6 +37,10 @@ func New() *Config {
 	return &Config{
 		Database: database{
 			URL: os.Getenv("DATABASE_URL"),
+		},
+		JWT: jwt{
+			Secret: os.Getenv("JWT_SECRET"),
+			Issuer: os.Getenv("DOMAIN"),
 		},
 	}
 }
