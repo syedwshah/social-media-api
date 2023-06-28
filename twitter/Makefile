@@ -20,10 +20,13 @@ migration:
 		migrate create -ext sql -dir postgres/migrations $$name
 
 run:
-	go run cmd/graphqlserver/main.go
+	go run cmd/graphqlserver/*.go
 
 generate:
 	go generate ./..
 
 test:
 	go test ./... --tags="integration"
+
+test-remove-cache:
+	go test ./... --tags="integration" -count=1
