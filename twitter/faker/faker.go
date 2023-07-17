@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"hash/maphash"
 	"math/rand"
+
+	"github.com/syedwshah/twitter/uuid"
 )
 
 func init() {
@@ -47,6 +49,10 @@ func Username() string {
 
 func ID() string {
 	return fmt.Sprintf("%s-%s-%s-%s", randStringRunes(4), randStringRunes(4), randStringRunes(4), randStringRunes(4))
+}
+
+func UUID() string {
+	return uuid.Generate()
 }
 
 func Email() string {
